@@ -53,7 +53,7 @@ class Nonogram:
 
     # afficher le nonogramme sur le terminal
     def show_terminal(self):
-        print(f"Grille no {self.id} :\n") # n° de l'instance
+        print(f"Grille no {self.id} :\n") # n de l'instance
 
         cpt = 0 #compteur ligne 
         for ligne in self.grille:
@@ -77,4 +77,4 @@ class Nonogram:
                     rep_l += "⬜\t"
 
             print(rep_l+"\n")
-        
+            

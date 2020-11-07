@@ -94,7 +94,7 @@ def test_T():
 
     # On test les 16 instances
     for i in range(17):
-        print(f"######## instance {i} ########") # instance n°
+        print(f"######## instance {i} ########")
         n = loadInstance(i) 
         for seqs in n.seqL: 
             s = seqs.split(" ") # on obtiens des strings

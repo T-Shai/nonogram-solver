@@ -36,7 +36,6 @@ class Resolveur:
                 en compte, donc les j+1 cases peuvent etre
                 colorie en blanc. On retourne donc vrai.
             """
-            # Ne faut-il pas colorier la ligne ausi en blanc ? 
             return True
         
         # l >= 1
@@ -82,5 +81,5 @@ class Resolveur:
                 # nombre de case de sl et 1 case blanche
                 # vu que les deux cas sont possibles
                 # on veut le cas ou c'est possible
-                
+
                 return Resolveur.T(j - s[l-1] -1, l-1, s) or Resolveur.T(j-1, l, s)

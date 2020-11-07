@@ -17,7 +17,7 @@ def loadInstance(n : int):
     """
     # Chemin vers le fichier d'instance standard
     instancePath = "./instances/"
-    fileName = str(n)+".txt" # n° Instance.txt
+    fileName = str(n)+".txt" # n Instance.txt
     l = list()
     # ouverture du fichier et recuperation des sequences
     try:
@@ -32,5 +32,5 @@ def loadInstance(n : int):
     if m == tuple(): #liste vide 
         return None
     l, c = m # Ligne , colone 
-    return Nonogram(n, l[:len(l)-1],c[1:len(c)-1]) # n° instance , lignes , colonnes 
+    return Nonogram(n, l[:len(l)-1],c[1:len(c)-1]) # n instance , lignes , colonnes 
     
