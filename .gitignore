@@ -1,0 +1,5 @@
+# sujet
+SUJET.pdf
+
+# all __pycache__
+src/**/__pycache__
