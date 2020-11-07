@@ -1,7 +1,16 @@
+"""
+    PROJET ALGORITHMIQUE 2
+
+    author : T-Sai & Ethanlebg3
+
+    Execution des instances 
+
+"""
 
 from core.util.parser import loadInstance
 from core.nonogram import CASE
 from core.resolveur import Resolveur
+
 def test_chargement_coriage_affichage():
     """
         test :
@@ -83,19 +92,21 @@ def test_T():
     j = 26
     assert Resolveur.T(j, l, s) == False
 
+    # On test les 16 instances
     for i in range(17):
-        print(f"######## instance {i} ########")
-        n = loadInstance(i)
-        for seqs in n.seqL:
-            s = seqs.split(" ")
-            s = [int(n) for n in s if n != ""]
-            l = len(s)
-            j = len(n.seqC)
+        print(f"######## instance {i} ########") # instance n°
+        n = loadInstance(i) 
+        for seqs in n.seqL: 
+            s = seqs.split(" ") # on obtiens des strings
+            s = [int(n) for n in s if n != ""] # on les convertis en int 
+            l = len(s)  
+            j = len(n.seqC) 
+
             print(f"Testing T({j}, {l}, {s}) ...")
-            assert Resolveur.T(j, l, s) == True
+            assert Resolveur.T(j, l, s) == True 
             print("Test passed successfully !")
             
 
 
 if __name__ == "__main__":
-    test_T()
+    test_T()  
