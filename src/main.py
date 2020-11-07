@@ -105,8 +105,12 @@ def test_T():
             print(f"Testing T({j}, {l}, {s}) ...")
             assert Resolveur.T(j, l, s) == True 
             print("Test passed successfully !")
-            
-
+    
+def test_T2():
+    j = 4
+    l = 2
+    s = [2, 2]
+    print(Resolveur.T(j, l, s))
 
 if __name__ == "__main__":
-    test_T()  
+    test_T2()  

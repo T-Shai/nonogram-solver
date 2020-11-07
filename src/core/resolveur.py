@@ -14,10 +14,11 @@ class Resolveur:
         la resolution du nonogramme
     """
 
-    #####   Question 4  #####
+    #####   Question 5  #####
 
     @staticmethod
-    def T(j : int, l : int, s: list):
+    def T(j : int, l : int, s: list) -> bool:
+        print(f"T({j}, {l}, {s}")
         """
             ## T(j : int, l : int, n : list) -> bool
 
@@ -61,7 +62,7 @@ class Resolveur:
                     si est seulement si sl est l'unique
                     bloc de la sequence
                 """
-                return l == 1
+                return len(s) == 1
             
             # j > sl -1
             else :
@@ -81,5 +82,20 @@ class Resolveur:
                 # nombre de case de sl et 1 case blanche
                 # vu que les deux cas sont possibles
                 # on veut le cas ou c'est possible
+                return Resolveur.T(j - s[l-1] -1, l-1, s)  or Resolveur.T(j-1, l, s)
+    
+    @staticmethod
+    def T_ligne (s : list, li : list) -> bool :
+        """
+            T_ligne(s : list, li : list) -> bool
 
-                return Resolveur.T(j - s[l-1] -1, l-1, s) or Resolveur.T(j-1, l, s)
+            s  :    sequence de la ligne    : list[str]
+
+            li :    ieme ligne              : list[int] 
+            
+            Etant donne une sequence (s1, . . . , sk) et une
+            ligne li avec certaines cases deja coloriees en
+            blanc ou en noir, il indique si une coloration
+            de cette ligne est possible.
+        """
+        pass
