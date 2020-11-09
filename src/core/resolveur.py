@@ -6,7 +6,7 @@
     classe resolvant le nonogramme
 """
 
-from core.nonogram import Nonogram
+from core.nonogram import Nonogram, CASE
 
 class Resolveur:
     """
@@ -97,5 +97,116 @@ class Resolveur:
             ligne li avec certaines cases deja coloriees en
             blanc ou en noir, il indique si une coloration
             de cette ligne est possible.
+
+            Utilise une fonction interne.
         """
-        pass
+
+        dyna = dict()
+
+        def loop(s : list, li : list) -> bool:
+            """
+                Fonction interne recursif permettant la
+                programmation dynamique.
+            """
+            """
+                En python, les list ne sont pas hashable
+                et donc ne peuvent pas etre utilisees
+                comme indice.
+                On transforme donc la liste en str pour
+                pouvoir l'implementer
+            """
+            hs = str(s)
+            hli = str(li)
+
+            if (hs, hli) in dyna :
+                """
+                    Si la case existe deja dans le tableau
+                    dynamique, on retourne la valeur
+                """
+                return dyna[hs, hli]
+            
+            if len(s) == 0: # sequence vide
+                """
+                    Si il y a une case coloriee en noir
+                    alors on ne peut pas colorier toute
+                    la ligne en blanc donc
+
+                    Si il y a une case noire dans la ligne
+                    on retourne Faux sinon on retourne Vrai
+                """
+                dyna[hs, hli] = CASE.NOIR not in li
+                return dyna[hs, hli]
+            
+            else :
+                j = len(li) # La longueur de la ligne
+                sl = s[-1]  # le dernier bloc de la sequence
+                k = len(s)
+                if j < (sl -1):
+                    """
+                        nombre de case de la ligne a colorier
+                        inferieur a la taille occupe par le 
+                        dernier bloc de la sequence
+                    """
+                    dyna[hs, hli] = False
+                    return dyna[hs, hli]
+                
+                elif j == (sl -1):
+                    if k == 1:
+                        """
+                            Si c'est l'unique bloc on
+                            verifie qu'il n' y a pas de
+                            case blanche dans la ligne
+                        """
+                        dyna[hs, hli] = CASE.BLANC not in li
+                        return dyna[hs, hli]
+                        
+                    else :
+                        """
+                            le dernier bloc n' est pas l'unique
+                            bloc de la sequence donc on retourne
+                            Faux
+                        """
+                        dyna[hs, hli] = False
+                        return dyna[hs, hli]
+                
+                # j > sl - 1
+                else :
+                    """
+                        3 cas possibles :
+
+                            1) la case (i,j) est blanche
+                            2) la case (i,j) est noire
+                            3) la case (i,j) est vide    
+                    """
+                    if li[-1] == CASE.BLANC:
+                        """
+                            cas (i,j) blanc : on "enleve"
+                            cette case et on cherche dans
+                            la suite
+                        """
+                        dyna[hs, hli] = loop(s, li[:-1])
+                        return dyna[hs, hli]
+                    
+                    elif li[-1] == CASE.NOIR:
+                        """
+                            cas (i, j) noir : 
+                        """
+                        """
+                            Notons estColoriable
+                            les sl derniers cases de la ligne
+                            ne continnent pas de case blanc
+                            et
+                            Notons estUniqBloc
+                            sl dernier bloc dans s
+                            et
+                            les lignes antecedents au sl dernier
+                            cases de la ligne ne contienne pas de
+                            case noir
+                        """
+                        estColoriable = CASE.BLANC not in li[:j-sl]
+                        estUniqBloc = (k == 1)
+                        
+
+                    pass
+                
+
