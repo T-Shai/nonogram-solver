@@ -1,7 +1,7 @@
 """
     PROJET ALGORITHMIQUE 2
 
-    author : T-Sai & Ethanlebg3
+    author : T-Sai & Ethan
 
     classe representant un nonogram 
 """

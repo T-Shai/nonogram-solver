@@ -1,7 +1,7 @@
 """
     PROJET ALGORITHMIQUE 2
 
-    author : T-Sai & Ethanlebg3
+    author : T-Sai & Ethan
 
     classe resolvant le nonogramme
 """
@@ -11,7 +11,7 @@ from core.nonogram import Nonogram, CASE
 class Resolveur:
     """
         classe intégrant les différents algorithmes permettant
-        la resolution du nonogramme
+        la resolution du nonogramme        
     """
 
     #####   Question 5  #####
@@ -89,7 +89,7 @@ class Resolveur:
         """
             T_ligne(s : list, li : list) -> bool
 
-            s  :    sequence de la ligne    : list[str]
+            s  :    sequence de la ligne    : list[int]
 
             li :    ieme ligne              : list[int] 
             
@@ -199,14 +199,20 @@ class Resolveur:
                             Notons estUniqBloc
                             sl dernier bloc dans s
                             et
+                            Notons estNonNoir
                             les lignes antecedents au sl dernier
                             cases de la ligne ne contienne pas de
                             case noir
                         """
-                        estColoriable = CASE.BLANC not in li[:j-sl]
+                        estColoriable = CASE.BLANC not in li[j-sl:]
                         estUniqBloc = (k == 1)
-                        
-
+                        estNonNoir = CASE.NOIR not in li[:j-sl]
+                        cas_1 = estColoriable and estUniqBloc and estNonNoir
+                        """
+                            Considérons la case precedent
+                            les sl derniere cases si elle
+                            est pas noir 
+                        """
                     pass
                 
 

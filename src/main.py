@@ -1,7 +1,7 @@
 """
     PROJET ALGORITHMIQUE 2
 
-    author : T-Sai & Ethanlebg3
+    author : T-Sai & Ethan
 
     Execution des instances 
 
@@ -113,4 +113,4 @@ def test_T2():
     print(Resolveur.T(j, l, s))
 
 if __name__ == "__main__":
-    test_T2()  
+    test_T()  
