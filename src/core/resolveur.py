@@ -291,5 +291,5 @@ class Resolveur:
     ##
     ########################################################################################################################
     @staticmethod
-    def Coloration(n : Nonogram) -> bool, Nonogram:
+    def Coloration(n : Nonogram) -> (bool, Nonogram):
         pass
