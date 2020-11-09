@@ -4,6 +4,22 @@
     author : T-Sai & Ethan
 
     classe resolvant le nonogramme
+
+    dans les solutions implementees ici
+    on va utilise une specificite de python
+    qui evalue les operations de booleennes
+    de facon "paresseuse".
+
+    En effet, dans True or <a>
+                   False and <b>
+
+    Les expressions a et b ne seront pas evalué
+    On utilisera donc ceci a notre avantage
+    en essayant de mettre les appels recursives
+    a droite
+    Cela explique certains choix dans le code
+    qui font defaut dans la clarte mais permettent
+    un gain de vitesse
 """
 
 from core.nonogram import Nonogram, CASE
@@ -14,13 +30,16 @@ class Resolveur:
         la resolution du nonogramme        
     """
 
-    #####   Question 5  #####
+    ########################################################################################################################
+    ##
+    ##      1.1 Premiere Etape
+    ##
+    ########################################################################################################################
 
     @staticmethod
     def T(j : int, l : int, s: list) -> bool:
-        print(f"T({j}, {l}, {s}")
         """
-            ## T(j : int, l : int, n : list) -> bool
+            T(j : int, l : int, n : list) -> bool
 
             retourne vrai si il est possible de colorier les j+1
             premieres cases de la ligne li avec la sous-sequence
@@ -28,62 +47,86 @@ class Resolveur:
             
             s la liste des blocs de la ligne li
             
-            #### hypothese l >= 0
+            hypothese l >= 0
+
+            On utilise une fonction interne pour
+            gerer la recursion et le tableau dynamique
         """
-        # Cas de base :
-        if l == 0: # 0 bloc 
-            """
-                si l == 0 : il n'y a pas de bloc à prendre
-                en compte, donc les j+1 cases peuvent etre
-                colorie en blanc. On retourne donc vrai.
-            """
-            return True
+        dyna = dict()
+        def loop(j: int, l: int, s: list) -> bool :
         
-        # l >= 1
-        else :
-            sl_moins_1 = (s[l-1]-1)
-            
-            if j < sl_moins_1:
-                """
-                    j + 1 < sl
+            if (j,l) in dyna:
+                return dyna[j,l]
 
-                    donc le nombre de case à colorier
-                    est inférieur au nombre de case 
-                    correspondant au bloc donc il est
-                    impossible de colorier c'est donc
-                    toujours faux
+            # Cas de base :
+            if l == 0: # 0 bloc 
                 """
-                return False
-
-            elif j == sl_moins_1:
+                    si l == 0 : il n'y a pas de bloc à prendre
+                    en compte, donc les j+1 cases peuvent etre
+                    colorie en blanc. On retourne donc vrai.
                 """
-                    nombre de case est égal au nombre
-                    de case du bloc sl. il est vrai
-                    si est seulement si sl est l'unique
-                    bloc de la sequence
-                """
-                return len(s) == 1
+                dyna[j,l] = True
+                return dyna[j,l]
             
-            # j > sl -1
+            # l >= 1
             else :
-                """
-                    Le nombre de case est plus grand que
-                    le nombre de bloc à colorier on peut
-                    donc toujours le placer maintenant il
-                    faut verifier les blocs antecedent
+                sl_moins_1 = (s[l-1]-1)
+                
+                if j < sl_moins_1:
+                    """
+                        j + 1 < sl
 
-                    on a 2 cas possibles le cas ou la case
-                    (i,j) est blanc et le cas ou cet case
-                    est noir donc le bloc est place a la 
-                    fin des j+1 cases
-                """
-                # Si (i, j) est blanc on décrémente j de 1
-                # si (i, j) est noir on décrémente j du
-                # nombre de case de sl et 1 case blanche
-                # vu que les deux cas sont possibles
-                # on veut le cas ou c'est possible
-                return Resolveur.T(j - s[l-1] -1, l-1, s)  or Resolveur.T(j-1, l, s)
-    
+                        donc le nombre de case à colorier
+                        est inférieur au nombre de case 
+                        correspondant au bloc donc il est
+                        impossible de colorier c'est donc
+                        toujours faux
+                    """
+                    dyna[j,l] = False
+                    return dyna[j,l]
+
+                elif j == sl_moins_1:
+                    """
+                        nombre de case est égal au nombre
+                        de case du bloc sl. il est vrai
+                        si est seulement si sl est l'unique
+                        bloc de la sequence
+                    """
+                    dyna[j,l] = len(s) == 1
+                    return dyna[j,l]
+                
+                # j > sl -1
+                else :
+                    """
+                        Le nombre de case est plus grand que
+                        le nombre de bloc à colorier on peut
+                        donc toujours le placer maintenant il
+                        faut verifier les blocs antecedent
+
+                        on a 2 cas possibles le cas ou la case
+                        (i,j) est blanc et le cas ou cet case
+                        est noir donc le bloc est place a la 
+                        fin des j+1 cases
+                    """
+                    # Si (i, j) est blanc on décrémente j de 1
+                    # si (i, j) est noir on décrémente j du
+                    # nombre de case de sl et 1 case blanche
+                    # vu que les deux cas sont possibles
+                    # on veut le cas ou c'est possible
+
+                    dyna[j,l] = loop(j - s[l-1] -1, l-1, s) or loop(j-1, l, s)
+                    return dyna[j,l]
+        
+        # Appelle à la fonction recursive interne implementant
+        # la programmation dynamique
+        return loop(j, l, s)
+        
+    ########################################################################################################################
+    ##
+    ##      1.2 Generalisation
+    ##
+    ########################################################################################################################
+
     @staticmethod
     def T_ligne (s : list, li : list) -> bool :
         """
@@ -104,6 +147,7 @@ class Resolveur:
         dyna = dict()
 
         def loop(s : list, li : list) -> bool:
+            print(f"T({s}, {li})")
             """
                 Fonction interne recursif permettant la
                 programmation dynamique.
@@ -115,9 +159,10 @@ class Resolveur:
                 On transforme donc la liste en str pour
                 pouvoir l'implementer
             """
+            # valeur permettant l'indexation
+            # de l'etat de la fonction 
             hs = str(s)
             hli = str(li)
-
             if (hs, hli) in dyna :
                 """
                     Si la case existe deja dans le tableau
@@ -138,7 +183,7 @@ class Resolveur:
                 return dyna[hs, hli]
             
             else :
-                j = len(li) # La longueur de la ligne
+                j = len(li)-1 # La longueur de la ligne
                 sl = s[-1]  # le dernier bloc de la sequence
                 k = len(s)
                 if j < (sl -1):
@@ -204,15 +249,47 @@ class Resolveur:
                             cases de la ligne ne contienne pas de
                             case noir
                         """
-                        estColoriable = CASE.BLANC not in li[j-sl:]
+                        estColoriable = CASE.BLANC not in li[j+1-sl:]
                         estUniqBloc = (k == 1)
-                        estNonNoir = CASE.NOIR not in li[:j-sl]
+                        estNonNoir = CASE.NOIR not in li[:j+1-sl]
+                        # Si vrai alors on peut placer l'unique bloc
+                        # sl à la fin de la ligne et colorier le reste
+                        # en blanc
                         cas_1 = estColoriable and estUniqBloc and estNonNoir
                         """
                             Considérons la case precedent
                             les sl derniere cases si elle
                             est pas noir 
+                            Alors on verifie les autres
+                            sequences de la case
                         """
-                    pass
-                
+                        dyna[hs, hli] = cas_1 or (estColoriable and (li[j+1-sl-1] != CASE.NOIR) and loop(s[:-1], li[:j+1-sl-1])) # operation paresseuse
+                        return dyna[hs, hli]
+                    
+                    # case (i,j) est vide
+                    else :
+                        """
+                            La case (i,j) etant vide on peut avoir
+                            les deux choix au dessus ainsi
+                            on va faire un ou logique entre les 
+                            deux
+                        """
+                        estColoriable = CASE.BLANC not in li[j+1-sl:]
+                        estUniqBloc = (k == 1)
+                        estNonNoir = CASE.NOIR not in li[:j+1-sl]
+                        cas_1 = estColoriable and estUniqBloc and estNonNoir
+                        #              |                      case (i,j) noir                               |   |  case (i,j) blanc               
+                        dyna[hs, hli] = cas_1 or (estColoriable and (li[j+1 -sl -1] != CASE.NOIR) and loop(s[:-1], li[:j+1-sl-1])) or loop(s, li[:-1])
+                        return dyna[hs, hli]
+        
+        # appelle recursive 
+        return loop(s, li)
 
+    ########################################################################################################################
+    ##
+    ##      1.3 Propagation
+    ##
+    ########################################################################################################################
+    @staticmethod
+    def Coloration(n : Nonogram) -> bool, Nonogram:
+        pass
