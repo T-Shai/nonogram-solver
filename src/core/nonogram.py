@@ -46,11 +46,37 @@ class Nonogram:
             for _ in range(len(self.seqC)):
                 li.append(CASE.VIDE)
             self.grille.append(li)
-    
+        
+        self.N = len(self.grille)
+        self.M = len(self.grille[0])
     # On colorie la case a la couleur correspondante
     def colorier(self, li : int, ci : int, couleur : int):
-        self.grille[li][ci]= couleur
-
+        self.grille[li][ci] = couleur
+    
+    def sequenceL(self, li : int) -> list:
+        l = self.seqL[li]
+        return [int(i) for i in l if i != ' ']
+    
+    def sequenceC(self, ci : int) -> list:
+        l = self.seqC[ci]
+        return [int(i) for i in l if i != ' ']
+    
+    def colonne(self, j : int) -> list:
+        cols = list()
+        for ligne in self.grille:
+            cols.append(ligne[j])
+        return cols
+    
+    def colorierColonne(self, j : int, l : list) -> list:
+        for i in range(len(l)):
+            self.colorier(i, j, l[i])
+    
+    def estToutColorie(self) -> bool:
+        for ligne in self.grille:
+            if CASE.VIDE in ligne:
+                return False
+        return True
+            
     # afficher le nonogramme sur le terminal
     def show_terminal(self):
         print(f"Grille no {self.id} :\n") # n de l'instance

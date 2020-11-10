@@ -24,12 +24,14 @@
 
 from core.nonogram import Nonogram, CASE
 
+from copy import deepcopy
+
 class Resolveur:
     """
         classe intégrant les différents algorithmes permettant
         la resolution du nonogramme        
     """
-
+    nT_ligne = 0
     ########################################################################################################################
     ##
     ##      1.1 Premiere Etape
@@ -147,7 +149,6 @@ class Resolveur:
         dyna = dict()
 
         def loop(s : list, li : list) -> bool:
-            print(f"T({s}, {li})")
             """
                 Fonction interne recursif permettant la
                 programmation dynamique.
@@ -285,11 +286,161 @@ class Resolveur:
         # appelle recursive 
         return loop(s, li)
 
+
+    
     ########################################################################################################################
     ##
     ##      1.3 Propagation
     ##
     ########################################################################################################################
     @staticmethod
-    def Coloration(n : Nonogram) -> (bool, Nonogram):
-        pass
+    def ColoreLig(n: Nonogram, i: int) -> (bool, Nonogram):
+        """
+            Colorie par recurrence un maximum de cases de la ligne i de n
+        """
+        nouveaux = set()
+        def loop(n: Nonogram, i: int, j: int) -> (bool, Nonogram):
+            print(f"T(n, {i}, {j}")
+            # cas de base
+            if j > n.M -1:
+                print("j > n.M -1")
+                return True, n
+            """
+                Si la case (i,j) est vide
+            """
+            if n.grille[i][j] == CASE.VIDE:
+                # test blanc
+                n.colorier(i, j, CASE.BLANC)
+                test_blanc = Resolveur.T_ligne(n.sequenceL(i), n.grille[i])
+
+                # test noir
+                n.colorier(i, j, CASE.NOIR)
+                test_noir = Resolveur.T_ligne(n.sequenceL(i), n.grille[i])
+
+                print(f"test_noir : {test_noir}")
+                print(f"test_blanc : {test_blanc}")
+                if not test_blanc and not test_noir:
+                    n.colorier(i, j, CASE.VIDE)
+                    print("not test")
+                    return False, n # detection d'impossibilite
+
+
+                elif test_blanc and not test_noir:
+                    n.colorier(i, j, CASE.BLANC)
+                    nouveaux.add(j)
+
+                elif not test_blanc and test_noir:
+                    n.colorier(i, j, CASE.NOIR)
+                    nouveaux.add(j)
+
+                else :
+                    n.colorier(i, j, CASE.VIDE)
+                
+                # print(n.grille)
+                return loop(n, i, j+1)
+            
+            else:
+                return loop(n, i, j+1)
+        
+        ok, cn = loop(n, i, 0)
+        # print(cn.grille)
+        # print(n.grille)
+        return ok, cn, nouveaux
+
+    @staticmethod
+    def ColoreCol(n: Nonogram, j: int) -> (bool, Nonogram):
+        """
+            Colorie par recurrence un maximum de cases de la colonne j de n
+        """
+        nouveaux = set()
+        def loop(n: Nonogram, j: int, i: int) -> (bool, Nonogram):
+            # print("loop", n.grille)
+            # cas de base
+            if i > n.N-1:
+                print("i > n.N-1")
+                return True, n
+
+            if n.grille[i][j] == CASE.VIDE:
+                # test blanc
+                n.colorier(i, j, CASE.BLANC)
+                test_blanc = Resolveur.T_ligne(n.sequenceC(j), n.colonne(j)) 
+                n.colorier(i, j, CASE.NOIR)
+                test_noir = Resolveur.T_ligne(n.sequenceC(j), n.colonne(j))
+                
+                if not test_blanc and not test_noir:
+                    n.colorier(i, j, CASE.VIDE)
+                    return False, n
+
+
+                elif test_blanc and not test_noir:
+                    n.colorier(i, j, CASE.BLANC)
+                    nouveaux.add(i)
+
+                elif not test_blanc and test_noir:
+                    n.colorier(i, j, CASE.NOIR)
+                    nouveaux.add(i)
+                
+                else:
+                    n.colorier(i, j, CASE.VIDE)
+                
+                return loop(n, j, i+1)
+            
+            else:
+                return loop(n, j, i+1)
+        
+        ok, cn = loop(n, j, 0)
+        # print(n.grille)
+        # print(cn.grille)
+        return ok, cn, nouveaux
+
+    @staticmethod
+    def Coloration(n : Nonogram):
+        """
+
+            Copie et colorie un nonogramme si il est
+            resolvable
+
+        """
+        """
+            Copie du Nonogram
+        """
+        cn : Nonogram = deepcopy(n)
+        """
+            On recupere les lignes
+            et les colonnes
+        """
+        LignesAVoir = set(range(cn.N))
+        ColonnesAVoir = set(range(cn.M))
+
+        while LignesAVoir != set() or ColonnesAVoir != set():
+
+            for i in LignesAVoir:
+                # print(i, "i1", cn.grille)
+                ok, cn, nouveaux = Resolveur.ColoreLig(cn, i)
+                # print(i, "i2", cn.grille, "\n")
+                if not ok :
+                    return False, n
+                ColonnesAVoir |= nouveaux
+                # En python, on ne peut pas
+                # supprimer ou ajouter un element
+                # tout en la parcourant donc on
+                # vide la liste apres le parcours
+            LignesAVoir = set()
+
+            for j in ColonnesAVoir:
+                # print(j, "j1", cn.grille)
+                ok, cn, nouveaux = Resolveur.ColoreCol(cn, j)
+                # print(j, "j2", cn.grille,"\n")
+                if not ok :
+                    return False, n
+                LignesAVoir |= nouveaux
+                # En python, on ne peut pas
+                # supprimer ou ajouter un element
+                # tout en la parcourant donc on
+                # vide la liste apres le parcours
+            ColonnesAVoir = set()
+        
+        if cn.estToutColorie():
+            return True, cn
+
+        return -1, cn # ne sait pas
