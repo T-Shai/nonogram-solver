@@ -452,3 +452,92 @@ class Resolveur:
             return True, cn
 
         return -1, cn # ne sait pas
+    
+    @staticmethod
+    def ColorierEtPropager(n : Nonogram, li: int, ci: int, couleur: int):
+        """
+
+            Copie et colorie un nonogramme si il est
+            resolvable
+
+        """
+        """
+            Copie du Nonogram
+        """
+        cn : Nonogram = deepcopy(n)
+        """
+            On recupere les lignes
+            et les colonnes
+        """
+        cn.colorier(li, ci, couleur)
+        LignesAVoir = set([li])
+        ColonnesAVoir = set([ci])
+
+        while LignesAVoir != set() or ColonnesAVoir != set():
+
+            for i in LignesAVoir:
+                # print(i, "i1", cn.grille)
+                ok, cn, nouveaux = Resolveur.ColoreLig(cn, i)
+                # print(i, "i2", cn.grille, "\n")
+                if not ok :
+                    return False, n
+                ColonnesAVoir |= nouveaux
+                # En python, on ne peut pas
+                # supprimer ou ajouter un element
+                # tout en la parcourant donc on
+                # vide la liste apres le parcours
+            LignesAVoir = set()
+
+            for j in ColonnesAVoir:
+                # print(j, "j1", cn.grille)
+                ok, cn, nouveaux = Resolveur.ColoreCol(cn, j)
+                # print(j, "j2", cn.grille,"\n")
+                if not ok :
+                    return False, n
+                LignesAVoir |= nouveaux
+                # En python, on ne peut pas
+                # supprimer ou ajouter un element
+                # tout en la parcourant donc on
+                # vide la liste apres le parcours
+            ColonnesAVoir = set()
+        
+        if cn.estToutColorie():
+            return True, cn
+
+        return -1, cn # ne sait pas
+
+
+    @staticmethod
+    def Enum_rec(n: Nonogram, k: int, couleur: int):
+        if k == n.M*n.N:
+            return True
+        i = int(k/n.M)
+        j = k % n.M
+
+        ok, cn = Resolveur.ColorierEtPropager(n, i, j, couleur)
+        
+        if ok != -1:
+            if not ok:
+                return False, n
+            else:
+                return True, cn
+        
+        k_p = n.M*n.N
+        for indx in range(k+1, n.M*n.N+1):
+            i = int(indx/n.M)
+            j = indx % n.M
+            if cn.grille[i][j] == CASE.VIDE:
+                k_p = indx
+                break
+        
+
+        return Resolveur.Enum_rec(cn, k_p, CASE.BLANC) or Resolveur.Enum_rec(cn, k_p, CASE.NOIR)
+
+    @staticmethod
+    def Enumeration(n : Nonogram):
+        cn = deepcopy(n)
+        ok, cn = Resolveur.Coloration(cn)
+        if not ok:
+            return False, n
+        return Resolveur.Enum_rec(cn, 0, CASE.BLANC) or Resolveur.Enum_rec(cn, 0, CASE.NOIR)
+    
