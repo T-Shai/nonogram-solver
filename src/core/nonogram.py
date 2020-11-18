@@ -54,12 +54,12 @@ class Nonogram:
         self.grille[li][ci] = couleur
     
     def sequenceL(self, li : int) -> list:
-        l = self.seqL[li]
-        return [int(i) for i in l if i != ' ']
+        l = self.seqL[li].split(" ")
+        return [int(i) for i in l if i != '']
     
     def sequenceC(self, ci : int) -> list:
-        l = self.seqC[ci]
-        return [int(i) for i in l if i != ' ']
+        l = self.seqC[ci].split(" ")
+        return [int(i) for i in l if i != '']
     
     def colonne(self, j : int) -> list:
         cols = list()
@@ -76,7 +76,12 @@ class Nonogram:
             if CASE.VIDE in ligne:
                 return False
         return True
-            
+    
+    def affiche_grille(self):
+        for i,ligne in enumerate(self.grille):
+            print(ligne)
+
+    
     # afficher le nonogramme sur le terminal
     def show_terminal(self):
         print(f"Grille no {self.id} :\n") # n de l'instance
@@ -95,11 +100,11 @@ class Nonogram:
                                             # seq de la ieme ligne  : 
             cpt += 1
             for i in ligne:
-                if i == -1:
+                if i == CASE.VIDE:
                     rep_l += "  \t"
-                elif i == 1: 
+                elif i == CASE.NOIR: 
                     rep_l += "⬛\t"
-                elif i == 0:
+                elif i == CASE.BLANC:
                     rep_l += "⬜\t"
 
             print(rep_l+"\n")

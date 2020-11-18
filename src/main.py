@@ -203,7 +203,8 @@ def test_T_ligne():
     
     
 if __name__ == "__main__":
-    n = loadInstance(1)
-    ok, n = Resolveur.Coloration(n)
-    print(ok)
-    n.show_terminal()
+    for i in range(19):
+        n = loadInstance(i)
+        ok, cn = Resolveur.Coloration(n)
+        cn.show_terminal()
+        input("appuyer pour continuer")

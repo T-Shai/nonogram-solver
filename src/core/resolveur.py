@@ -302,7 +302,7 @@ class Resolveur:
         def loop(n: Nonogram, i: int, j: int) -> (bool, Nonogram):
             print(f"T(n, {i}, {j}")
             # cas de base
-            if j > n.M -1:
+            if j < 0:
                 print("j > n.M -1")
                 return True, n
             """
@@ -317,11 +317,14 @@ class Resolveur:
                 n.colorier(i, j, CASE.NOIR)
                 test_noir = Resolveur.T_ligne(n.sequenceL(i), n.grille[i])
 
-                print(f"test_noir : {test_noir}")
-                print(f"test_blanc : {test_blanc}")
+                # print(f"test_noir : {test_noir}")
+                # print(f"test_blanc : {test_blanc}")
                 if not test_blanc and not test_noir:
                     n.colorier(i, j, CASE.VIDE)
-                    print("not test")
+                    print("not test :")
+                    print(i, j)
+                    n.affiche_grille()
+
                     return False, n # detection d'impossibilite
 
 
@@ -337,12 +340,12 @@ class Resolveur:
                     n.colorier(i, j, CASE.VIDE)
                 
                 # print(n.grille)
-                return loop(n, i, j+1)
+                return loop(n, i, j-1)
             
             else:
-                return loop(n, i, j+1)
+                return loop(n, i, j-1)
         
-        ok, cn = loop(n, i, 0)
+        ok, cn = loop(n, i, n.M -1)
         # print(cn.grille)
         # print(n.grille)
         return ok, cn, nouveaux
@@ -350,14 +353,15 @@ class Resolveur:
     @staticmethod
     def ColoreCol(n: Nonogram, j: int) -> (bool, Nonogram):
         """
+        
             Colorie par recurrence un maximum de cases de la colonne j de n
         """
         nouveaux = set()
         def loop(n: Nonogram, j: int, i: int) -> (bool, Nonogram):
             # print("loop", n.grille)
             # cas de base
-            if i > n.N-1:
-                print("i > n.N-1")
+            if i < 0:
+                # print("i > n.N-1")
                 return True, n
 
             if n.grille[i][j] == CASE.VIDE:
@@ -369,6 +373,10 @@ class Resolveur:
                 
                 if not test_blanc and not test_noir:
                     n.colorier(i, j, CASE.VIDE)
+                    print("ColoreCol : not test :")
+                    print(i, j)
+                    print(n.sequenceC(j), n.colonne(j))
+                    n.affiche_grille()
                     return False, n
 
 
@@ -383,12 +391,12 @@ class Resolveur:
                 else:
                     n.colorier(i, j, CASE.VIDE)
                 
-                return loop(n, j, i+1)
+                return loop(n, j, i-1)
             
             else:
-                return loop(n, j, i+1)
+                return loop(n, j, i-1)
         
-        ok, cn = loop(n, j, 0)
+        ok, cn = loop(n, j, n.N-1)
         # print(n.grille)
         # print(cn.grille)
         return ok, cn, nouveaux
@@ -426,6 +434,8 @@ class Resolveur:
                 # tout en la parcourant donc on
                 # vide la liste apres le parcours
             LignesAVoir = set()
+
+            cn.affiche_grille()
 
             for j in ColonnesAVoir:
                 # print(j, "j1", cn.grille)
