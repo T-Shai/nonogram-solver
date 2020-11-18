@@ -300,10 +300,10 @@ class Resolveur:
         """
         nouveaux = set()
         def loop(n: Nonogram, i: int, j: int) -> (bool, Nonogram):
-            print(f"T(n, {i}, {j}")
+            # print(f"T(n, {i}, {j}")
             # cas de base
             if j < 0:
-                print("j > n.M -1")
+                # print("j > n.M -1")
                 return True, n
             """
                 Si la case (i,j) est vide
@@ -321,9 +321,9 @@ class Resolveur:
                 # print(f"test_blanc : {test_blanc}")
                 if not test_blanc and not test_noir:
                     n.colorier(i, j, CASE.VIDE)
-                    print("not test :")
-                    print(i, j)
-                    n.affiche_grille()
+                    # print("not test :")
+                    # print(i, j)
+                    # n.affiche_grille()
 
                     return False, n # detection d'impossibilite
 
@@ -373,10 +373,10 @@ class Resolveur:
                 
                 if not test_blanc and not test_noir:
                     n.colorier(i, j, CASE.VIDE)
-                    print("ColoreCol : not test :")
-                    print(i, j)
-                    print(n.sequenceC(j), n.colonne(j))
-                    n.affiche_grille()
+                    # print("ColoreCol : not test :")
+                    # print(i, j)
+                    # print(n.sequenceC(j), n.colonne(j))
+                    # n.affiche_grille()
                     return False, n
 
 
@@ -434,8 +434,6 @@ class Resolveur:
                 # tout en la parcourant donc on
                 # vide la liste apres le parcours
             LignesAVoir = set()
-
-            cn.affiche_grille()
 
             for j in ColonnesAVoir:
                 # print(j, "j1", cn.grille)

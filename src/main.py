@@ -203,8 +203,13 @@ def test_T_ligne():
     
     
 if __name__ == "__main__":
+    from core.util.graphic import Fenetre, Tk
+    racine = Tk()
+    f = Fenetre()
+    racine.geometry("700x700")
     for i in range(19):
         n = loadInstance(i)
         ok, cn = Resolveur.Coloration(n)
-        cn.show_terminal()
+        # cn.show_terminal()
+        f.draw_nonogram(cn, ok)
         input("appuyer pour continuer")
