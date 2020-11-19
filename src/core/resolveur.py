@@ -530,7 +530,6 @@ class Resolveur:
                 k_p = indx
                 break
         
-
         return Resolveur.Enum_rec(cn, k_p, CASE.BLANC) or Resolveur.Enum_rec(cn, k_p, CASE.NOIR)
 
     @staticmethod

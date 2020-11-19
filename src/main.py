@@ -207,7 +207,7 @@ if __name__ == "__main__":
     racine = Tk()
     f = Fenetre()
     racine.geometry("700x700")
-    for i in range(0, 19):
+    for i in range(14, 15):
         n = loadInstance(i)
         ok, cn = Resolveur.Enumeration(n)
         # cn.show_terminal()
