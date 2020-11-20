@@ -113,85 +113,85 @@ def test_T2():
     print(Resolveur.T(j, l, s))
 
 def test_T_ligne():
-    # li = [CASE.VIDE, CASE.VIDE, CASE.VIDE]
-    # s = []
-    # assert Resolveur.T_ligne(s, li) == True
+    li = [CASE.VIDE, CASE.VIDE, CASE.VIDE]
+    s = []
+    assert Resolveur.T_ligne(s, li) == True
 
-    # li = [CASE.VIDE, CASE.VIDE, CASE.VIDE]
-    # s = [4]
-    # assert Resolveur.T_ligne(s, li) == False
+    li = [CASE.VIDE, CASE.VIDE, CASE.VIDE]
+    s = [4]
+    assert Resolveur.T_ligne(s, li) == False
 
-    # li = [CASE.VIDE, CASE.BLANC, CASE.VIDE]
-    # s = [1,1]
-    # assert Resolveur.T_ligne(s, li) == True
+    li = [CASE.VIDE, CASE.BLANC, CASE.VIDE]
+    s = [1,1]
+    assert Resolveur.T_ligne(s, li) == True
 
-    # li = [CASE.VIDE, CASE.BLANC, CASE.BLANC]
-    # s = [1,1]
-    # assert Resolveur.T_ligne(s, li) == False
+    li = [CASE.VIDE, CASE.BLANC, CASE.BLANC]
+    s = [1,1]
+    assert Resolveur.T_ligne(s, li) == False
 
-    # li = [CASE.VIDE, CASE.BLANC, CASE.NOIR]
-    # s = [1,1]
-    # assert Resolveur.T_ligne(s, li) == True
+    li = [CASE.VIDE, CASE.BLANC, CASE.NOIR]
+    s = [1,1]
+    assert Resolveur.T_ligne(s, li) == True
 
-    # li = [CASE.NOIR, CASE.BLANC, CASE.BLANC]
-    # s = [1,1]
-    # assert Resolveur.T_ligne(s, li) == False
+    li = [CASE.NOIR, CASE.BLANC, CASE.BLANC]
+    s = [1,1]
+    assert Resolveur.T_ligne(s, li) == False
 
-    # li = [CASE.VIDE, CASE.NOIR, CASE.VIDE]
-    # s = [1,1]
-    # assert Resolveur.T_ligne(s, li) == False
+    li = [CASE.VIDE, CASE.NOIR, CASE.VIDE]
+    s = [1,1]
+    assert Resolveur.T_ligne(s, li) == False
 
-    # li = [CASE.BLANC, CASE.VIDE, CASE.BLANC]
-    # s = [1]
-    # assert Resolveur.T_ligne(s, li) == True
+    li = [CASE.BLANC, CASE.VIDE, CASE.BLANC]
+    s = [1]
+    assert Resolveur.T_ligne(s, li) == True
 
-    # li = [CASE.NOIR, CASE.NOIR, CASE.NOIR]
-    # s = [3]
-    # assert Resolveur.T_ligne(s, li) == True
+    li = [CASE.NOIR, CASE.NOIR, CASE.NOIR]
+    s = [3]
+    assert Resolveur.T_ligne(s, li) == True
 
-    # li = [CASE.VIDE, CASE.VIDE, CASE.VIDE]
-    # s = [3]
-    # assert Resolveur.T_ligne(s, li) == True
+    li = [CASE.VIDE, CASE.VIDE, CASE.VIDE]
+    s = [3]
+    assert Resolveur.T_ligne(s, li) == True
     
-    # li = [CASE.VIDE, CASE.BLANC, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.VIDE,CASE.NOIR]
-    # s = [1,1,3]
-    # assert Resolveur.T_ligne(s, li) == True
+    li = [CASE.VIDE, CASE.BLANC, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.VIDE,CASE.NOIR]
+    s = [1,1,3]
+    assert Resolveur.T_ligne(s, li) == True
 
-    # li = [CASE.VIDE, CASE.BLANC, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.VIDE,CASE.BLANC]
-    # s = [1,1,3]
-    # assert Resolveur.T_ligne(s, li) == True
+    li = [CASE.VIDE, CASE.BLANC, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.VIDE,CASE.BLANC]
+    s = [1,1,3]
+    assert Resolveur.T_ligne(s, li) == True
 
-    # li = [CASE.VIDE, CASE.BLANC, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.BLANC,CASE.BLANC]
-    # s = [1,1,3]
-    # assert Resolveur.T_ligne(s, li) == False
+    li = [CASE.VIDE, CASE.BLANC, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.BLANC,CASE.BLANC]
+    s = [1,1,3]
+    assert Resolveur.T_ligne(s, li) == False
 
-    # li = [CASE.VIDE, CASE.BLANC, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.BLANC,CASE.VIDE]
-    # s = [1,1,3]
-    # assert Resolveur.T_ligne(s, li) == False
+    li = [CASE.VIDE, CASE.BLANC, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.BLANC,CASE.VIDE]
+    s = [1,1,3]
+    assert Resolveur.T_ligne(s, li) == False
 
-    # li = [CASE.VIDE, CASE.BLANC, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.BLANC,CASE.VIDE]
-    # s = [1,4,1]
-    # assert Resolveur.T_ligne(s, li) == True
+    li = [CASE.VIDE, CASE.BLANC, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.BLANC,CASE.VIDE]
+    s = [1,4,1]
+    assert Resolveur.T_ligne(s, li) == True
 
-    # li = [CASE.VIDE, CASE.BLANC, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.BLANC,CASE.VIDE, CASE.VIDE, CASE.VIDE]
-    # s = [1,1,3, 1]
-    # assert Resolveur.T_ligne(s, li) == False
+    li = [CASE.VIDE, CASE.BLANC, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.BLANC,CASE.VIDE, CASE.VIDE, CASE.VIDE]
+    s = [1,1,3, 1]
+    assert Resolveur.T_ligne(s, li) == False
 
-    # li = [CASE.NOIR, CASE.BLANC, CASE.VIDE, CASE.BLANC, CASE.VIDE, CASE.VIDE, CASE.BLANC,CASE.NOIR]
-    # s = [1, 1, 1, 1]
-    # assert Resolveur.T_ligne(s, li) == True
+    li = [CASE.NOIR, CASE.BLANC, CASE.VIDE, CASE.BLANC, CASE.VIDE, CASE.VIDE, CASE.BLANC,CASE.NOIR]
+    s = [1, 1, 1, 1]
+    assert Resolveur.T_ligne(s, li) == True
 
-    # li = [CASE.NOIR, CASE.BLANC, CASE.VIDE, CASE.BLANC, CASE.NOIR, CASE.NOIR, CASE.BLANC,CASE.VIDE]
-    # s = [1, 1, 1, 1]
-    # assert Resolveur.T_ligne(s, li) == False
+    li = [CASE.NOIR, CASE.BLANC, CASE.VIDE, CASE.BLANC, CASE.NOIR, CASE.NOIR, CASE.BLANC,CASE.VIDE]
+    s = [1, 1, 1, 1]
+    assert Resolveur.T_ligne(s, li) == False
 
-    # li = [CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.NOIR]
-    # s = [1,1]
-    # assert Resolveur.T_ligne(s, li) == True
+    li = [CASE.VIDE, CASE.VIDE, CASE.VIDE, CASE.NOIR]
+    s = [1,1]
+    assert Resolveur.T_ligne(s, li) == True
 
-    # li = [CASE.NOIR, CASE.VIDE, CASE.VIDE, CASE.NOIR]
-    # s = [1,1]
-    # assert Resolveur.T_ligne(s, li) == True
+    li = [CASE.NOIR, CASE.VIDE, CASE.VIDE, CASE.NOIR]
+    s = [1,1]
+    assert Resolveur.T_ligne(s, li) == True
 
     for n in range(1000):
         li = [CASE.VIDE for _ in range(n)]
@@ -207,9 +207,9 @@ if __name__ == "__main__":
     racine = Tk()
     f = Fenetre()
     racine.geometry("700x700")
-    for i in range(14, 15):
+    for i in range(14, 18):
         n = loadInstance(i)
         ok, cn = Resolveur.Enumeration(n)
-        # cn.show_terminal()
+        # cn.affiche_grille()
         f.draw_nonogram(cn, ok)
         input("appuyer pour continuer")

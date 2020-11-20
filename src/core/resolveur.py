@@ -530,7 +530,11 @@ class Resolveur:
                 k_p = indx
                 break
         
-        return Resolveur.Enum_rec(cn, k_p, CASE.BLANC) or Resolveur.Enum_rec(cn, k_p, CASE.NOIR)
+        ok, cn1 = Resolveur.Enum_rec(cn, k_p, CASE.BLANC)
+        
+        if ok == True :
+            return ok, cn1
+        return Resolveur.Enum_rec(cn, k_p, CASE.NOIR)
 
     @staticmethod
     def Enumeration(n : Nonogram):
@@ -538,5 +542,11 @@ class Resolveur:
         ok, cn = Resolveur.Coloration(cn)
         if not ok:
             return False, n
-        return Resolveur.Enum_rec(cn, 0, CASE.BLANC) or Resolveur.Enum_rec(cn, 0, CASE.NOIR)
+
+        ok, cn1 = Resolveur.Enum_rec(cn, 0, CASE.BLANC)
+
+        if ok == True:
+            return ok, cn1 
+        return Resolveur.Enum_rec(cn, 0, CASE.NOIR)
+
     
