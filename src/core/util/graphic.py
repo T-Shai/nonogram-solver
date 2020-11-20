@@ -3,7 +3,8 @@
 
     author : T-Sai & Ethan
 
-
+    classe fenetre gerant l'affichage graphic
+    avec tkinter
 """
 from core.nonogram import Nonogram, CASE
 
