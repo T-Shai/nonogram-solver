@@ -47,25 +47,56 @@ class Nonogram:
                 li.append(CASE.VIDE)
             self.grille.append(li)
         
+        self.colonnes = list()
+        for _ in range(len(self.seqC)):
+            ci = list()
+            for _ in range(len(self.seqL)):
+                ci.append(CASE.VIDE)
+            self.colonnes.append(ci)
+
         self.N = len(self.grille)
         self.M = len(self.grille[0])
+
+        ## opti
+        # self.sequenceCs = dict()
+        # self.sequenceLs = dict()
+        self.sequenceCs = list()
+        for ci in range(self.M):
+            l = self.seqC[ci].split(" ")
+            self.sequenceCs.append([int(i) for i in l if i != ''])
+        
+        self.sequenceLs = list()
+        for li in range(self.N):
+            l = self.seqL[li].split(" ")
+            self.sequenceLs.append([int(i) for i in l if i != ''])
+        
     # On colorie la case a la couleur correspondante
     def colorier(self, li : int, ci : int, couleur : int):
         self.grille[li][ci] = couleur
-    
+        self.colonnes[ci][li] = couleur
+
     def sequenceL(self, li : int) -> list:
-        l = self.seqL[li].split(" ")
-        return [int(i) for i in l if i != '']
+        return self.sequenceLs[li]
+        # if li in self.sequenceLs:
+        #     return self.sequenceLs[li]
+        # l = self.seqL[li].split(" ")
+        # self.sequenceLs[li] = [int(i) for i in l if i != '']
+        # return self.sequenceLs[li]
     
     def sequenceC(self, ci : int) -> list:
-        l = self.seqC[ci].split(" ")
-        return [int(i) for i in l if i != '']
-    
+        return self.sequenceCs[ci]
+        # if ci in self.sequenceCs:
+        #     return self.sequenceCs[ci]
+        # l = self.seqC[ci].split(" ")
+        # self.sequenceCs[ci] = [int(i) for i in l if i != '']
+        # return self.sequenceCs[ci]
+
     def colonne(self, j : int) -> list:
-        cols = list()
-        for ligne in self.grille:
-            cols.append(ligne[j])
-        return cols
+        return self.colonnes[j]
+        # cols = list()
+        # for ligne in self.grille:
+        #     cols.append(ligne[j])
+        # return cols
     
     def colorierColonne(self, j : int, l : list) -> list:
         for i in range(len(l)):

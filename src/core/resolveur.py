@@ -146,7 +146,7 @@ class Resolveur:
             Utilise une fonction interne.
         """
 
-        dyna = dict()
+        dyna = dict()   # table de hachage pour la prog dynamique
 
         def loop(s : list, li : list) -> bool:
             """
@@ -300,10 +300,8 @@ class Resolveur:
         """
         nouveaux = set()
         def loop(n: Nonogram, i: int, j: int) -> (bool, Nonogram):
-            # print(f"T(n, {i}, {j}")
             # cas de base
             if j < 0:
-                # print("j > n.M -1")
                 return True, n
             """
                 Si la case (i,j) est vide
@@ -317,14 +315,8 @@ class Resolveur:
                 n.colorier(i, j, CASE.NOIR)
                 test_noir = Resolveur.T_ligne(n.sequenceL(i), n.grille[i])
 
-                # print(f"test_noir : {test_noir}")
-                # print(f"test_blanc : {test_blanc}")
                 if not test_blanc and not test_noir:
                     n.colorier(i, j, CASE.VIDE)
-                    # print("not test :")
-                    # print(i, j)
-                    # n.affiche_grille()
-
                     return False, n # detection d'impossibilite
 
 
@@ -339,15 +331,12 @@ class Resolveur:
                 else :
                     n.colorier(i, j, CASE.VIDE)
                 
-                # print(n.grille)
                 return loop(n, i, j-1)
             
             else:
                 return loop(n, i, j-1)
         
         ok, cn = loop(n, i, n.M -1)
-        # print(cn.grille)
-        # print(n.grille)
         return ok, cn, nouveaux
 
     @staticmethod
@@ -358,10 +347,8 @@ class Resolveur:
         """
         nouveaux = set()
         def loop(n: Nonogram, j: int, i: int) -> (bool, Nonogram):
-            # print("loop", n.grille)
             # cas de base
             if i < 0:
-                # print("i > n.N-1")
                 return True, n
 
             if n.grille[i][j] == CASE.VIDE:
@@ -373,10 +360,6 @@ class Resolveur:
                 
                 if not test_blanc and not test_noir:
                     n.colorier(i, j, CASE.VIDE)
-                    # print("ColoreCol : not test :")
-                    # print(i, j)
-                    # print(n.sequenceC(j), n.colonne(j))
-                    # n.affiche_grille()
                     return False, n
 
 
@@ -397,17 +380,13 @@ class Resolveur:
                 return loop(n, j, i-1)
         
         ok, cn = loop(n, j, n.N-1)
-        # print(n.grille)
-        # print(cn.grille)
         return ok, cn, nouveaux
 
     @staticmethod
     def Coloration(n : Nonogram):
         """
-
             Copie et colorie un nonogramme si il est
             resolvable
-
         """
         """
             Copie du Nonogram
@@ -423,9 +402,7 @@ class Resolveur:
         while LignesAVoir != set() or ColonnesAVoir != set():
 
             for i in LignesAVoir:
-                # print(i, "i1", cn.grille)
                 ok, cn, nouveaux = Resolveur.ColoreLig(cn, i)
-                # print(i, "i2", cn.grille, "\n")
                 if not ok :
                     return False, n
                 ColonnesAVoir |= nouveaux
@@ -436,9 +413,7 @@ class Resolveur:
             LignesAVoir = set()
 
             for j in ColonnesAVoir:
-                # print(j, "j1", cn.grille)
                 ok, cn, nouveaux = Resolveur.ColoreCol(cn, j)
-                # print(j, "j2", cn.grille,"\n")
                 if not ok :
                     return False, n
                 LignesAVoir |= nouveaux
@@ -476,9 +451,7 @@ class Resolveur:
         while LignesAVoir != set() or ColonnesAVoir != set():
 
             for i in LignesAVoir:
-                # print(i, "i1", cn.grille)
                 ok, cn, nouveaux = Resolveur.ColoreLig(cn, i)
-                # print(i, "i2", cn.grille, "\n")
                 if not ok :
                     return False, n
                 ColonnesAVoir |= nouveaux
@@ -489,9 +462,7 @@ class Resolveur:
             LignesAVoir = set()
 
             for j in ColonnesAVoir:
-                # print(j, "j1", cn.grille)
                 ok, cn, nouveaux = Resolveur.ColoreCol(cn, j)
-                # print(j, "j2", cn.grille,"\n")
                 if not ok :
                     return False, n
                 LignesAVoir |= nouveaux
@@ -540,7 +511,7 @@ class Resolveur:
     def Enumeration(n : Nonogram):
         cn = deepcopy(n)
         ok, cn = Resolveur.Coloration(cn)
-        if not ok:
+        if ok == False:
             return False, n
 
         ok, cn1 = Resolveur.Enum_rec(cn, 0, CASE.BLANC)

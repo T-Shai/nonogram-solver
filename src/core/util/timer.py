@@ -21,9 +21,9 @@ class Chronometre:
     def __init__(self, function):
         self.func = function
     
-    def time(self, n: Nonogram) -> float:
+    def time(self, n: Nonogram) -> (float, Nonogram):
         start = timer()
-        ok, _ = self.func(n)
+        ok, cn = self.func(n)
         if ok == False:
             raise RuntimeError(f"Chronometre.time : Le nonogram {n.id} est pas coloriable !")
-        return timer() - start
+        return (timer() - start), cn

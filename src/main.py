@@ -205,15 +205,15 @@ def test_T_ligne():
 if __name__ == "__main__":
     from core.util.graphic import Fenetre, Tk
     from core.util.timer import Chronometre
-    # racine = Tk()
-    # f = Fenetre()
-    # racine.geometry("700x700")
+    racine = Tk()
+    f = Fenetre()
+    racine.geometry("700x700")
     chrono_enum = Chronometre(Resolveur.Enumeration)
-    for i in range(0, 18):
+    for i in range(16, 18):
         n = loadInstance(i)
-        t = chrono_enum.time(n)
+        t, cn = chrono_enum.time(n)
         print(f"grille n: {n.id}\tM: {n.M}\tM: {n.N}\ttemps(s): {t}")
         # ok, cn = Resolveur.Enumeration(n)
-        # # cn.affiche_grille()
-        # f.draw_nonogram(cn, ok)
-        # input("\n")
+        # cn.affiche_grille()
+        f.draw_nonogram(cn, True)
+        input("\n")
