@@ -31,12 +31,13 @@ class Resolveur:
         classe intégrant les différents algorithmes permettant
         la resolution du nonogramme        
     """
-    nT_ligne = 0
     ########################################################################################################################
     ##
     ##      1.1 Premiere Etape
     ##
     ########################################################################################################################
+
+    NE_SAIT_PAS = -1
 
     @staticmethod
     def T(j : int, l : int, s: list) -> bool:
@@ -426,7 +427,7 @@ class Resolveur:
         if cn.estToutColorie():
             return True, cn
 
-        return -1, cn # ne sait pas
+        return Resolveur.NE_SAIT_PAS, cn # ne sait pas
     
     @staticmethod
     def ColorierEtPropager(n : Nonogram, li: int, ci: int, couleur: int):
@@ -475,24 +476,35 @@ class Resolveur:
         if cn.estToutColorie():
             return True, cn
 
-        return -1, cn # ne sait pas
+        return Resolveur.NE_SAIT_PAS, cn # ne sait pas
 
 
     @staticmethod
     def Enum_rec(n: Nonogram, k: int, couleur: int):
-        if k == n.M*n.N:
-            return True
-        i = int(k/n.M)
-        j = k % n.M
+        """
 
+            Algorithme recursif d'enumeration
+        """
+        if k == n.M*n.N:
+            """
+                Si tous les cases sont coloriés
+            """
+            return True
+
+        i = int(k/n.M)  # ligne de la case K
+        j = k % n.M     # colonne de la case K
+
+        # On colorie la case K et on propage
         ok, cn = Resolveur.ColorierEtPropager(n, i, j, couleur)
         
-        if ok != -1:
+        # Si il sait le resoudre
+        if ok != Resolveur.NE_SAIT_PAS:
             if not ok:
                 return False, n
             else:
                 return True, cn
         
+        # indice de la prochaine case vide
         k_p = n.M*n.N
         for indx in range(k+1, n.M*n.N+1):
             i = int(indx/n.M)
@@ -501,23 +513,35 @@ class Resolveur:
                 k_p = indx
                 break
         
+        # appel recursive en coloriant la cases en blanc
         ok, cn1 = Resolveur.Enum_rec(cn, k_p, CASE.BLANC)
         
+        # retour anticipe si elle est resolue en coloriant en blanc
         if ok == True :
             return ok, cn1
+
+        #appel recursive en coloriant la case en noir
         return Resolveur.Enum_rec(cn, k_p, CASE.NOIR)
 
     @staticmethod
     def Enumeration(n : Nonogram):
-        cn = deepcopy(n)
-        ok, cn = Resolveur.Coloration(cn)
-        if ok == False:
-            return False, n
+        cn = deepcopy(n)                    # copie du nonogram
+        ok, cn = Resolveur.Coloration(cn)   # Resolution avec coloration
+        
+        if ok != Resolveur.NE_SAIT_PAS:
+            # cas ou coloration a determine un resultat
+            if not ok:
+                return ok, n
+            else:
+                return ok, cn
+        else:
+            # cas ou coloration ne sait pas
 
-        ok, cn1 = Resolveur.Enum_rec(cn, 0, CASE.BLANC)
+            ok, cn1 = Resolveur.Enum_rec(cn, 0, CASE.BLANC)
 
-        if ok == True:
-            return ok, cn1 
-        return Resolveur.Enum_rec(cn, 0, CASE.NOIR)
+            if ok == True:
+                return ok, cn1 
+                
+            return Resolveur.Enum_rec(cn, 0, CASE.NOIR)
 
     

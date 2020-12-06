@@ -203,17 +203,53 @@ def test_T_ligne():
     
     
 if __name__ == "__main__":
-    from core.util.graphic import Fenetre, Tk
-    from core.util.timer import Chronometre
+    from core.util.graphic import Fenetre, Tk       # graphisme
+    from core.util.timer import Chronometre         # timer
+
+    import os  # pour reucpere les arguments de la fonction
+    
+    _DEBUG = False
+
+    if not _DEBUG:
+        os.sys.tracebacklimit = 0
+
+    USAGE = """\n---------------------------
+USAGE:
+
+Projet-ALGORITHMIQUE II : Nonogramme :
+2020/2021
+THURAIRAJAH SHAITHAN
+ABITBOL YOSSEF
+
+Pour executer (Windows):
+------------------------------------------------------------------------------------
+> python .\main.py <coloration/enumeration> <nom_du_fichier_d_instance_sans_le_txt>|
+------------------------------------------------------------------------------------
+
+exemple pour lancer 15.txt en enumeration :
+> python .\main enumeration 15
+"""
+    if len(os.sys.argv) != 3 or os.sys.argv[1]=="help" :
+        print(USAGE)
+        exit(0)
+
+    # tkinter
     racine = Tk()
     f = Fenetre()
     racine.geometry("700x700")
-    chrono_enum = Chronometre(Resolveur.Enumeration)
-    for i in range(16, 18):
-        n = loadInstance(i)
-        t, cn = chrono_enum.time(n)
-        print(f"grille n: {n.id}\tM: {n.M}\tM: {n.N}\ttemps(s): {t}")
-        # ok, cn = Resolveur.Enumeration(n)
-        # cn.affiche_grille()
-        f.draw_nonogram(cn, True)
-        input("\n")
+    
+    # choix de la methode partielle ou complete
+    if os.sys.argv[1].lower() == "coloration":
+        chrono = Chronometre(Resolveur.Coloration)
+    elif os.sys.argv[1].lower() == "enumeration":
+        chrono = Chronometre(Resolveur.Enumeration)
+    else:
+        print(USAGE)
+        exit(0)
+    
+    # choix de l'instance
+    n = loadInstance(os.sys.argv[2])
+    timer, ok, cn = chrono.time(n)
+    print(f"\nCHRONO:\nLa resolution a pris {timer} seconde(s)\n")
+    f.draw_nonogram(cn, ok)
+    racine.mainloop()

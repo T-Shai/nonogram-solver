@@ -26,4 +26,4 @@ class Chronometre:
         ok, cn = self.func(n)
         if ok == False:
             raise RuntimeError(f"Chronometre.time : Le nonogram {n.id} est pas coloriable !")
-        return (timer() - start), cn
+        return (timer() - start), ok, cn
