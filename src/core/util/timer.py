@@ -6,7 +6,7 @@
     fonction permettant le calcul 
     du temps d'une fonction
 """
-from core.nonogram import Nonogram
+from src.core.nonogram import Nonogram
 from timeit import default_timer as timer
 """
     timeit permet de tenir compte du garbage collector

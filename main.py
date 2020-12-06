@@ -7,9 +7,9 @@
 
 """
 
-from core.util.parser import loadInstance
-from core.nonogram import CASE
-from core.resolveur import Resolveur
+from src.core.util.parser import loadInstance
+from src.core.nonogram import CASE
+from src.core.resolveur import Resolveur
 
 def test_chargement_coriage_affichage():
     """
@@ -203,17 +203,17 @@ def test_T_ligne():
     
     
 if __name__ == "__main__":
-    from core.util.graphic import Fenetre, Tk       # graphisme
-    from core.util.timer import Chronometre         # timer
+    from src.core.util.graphic import Fenetre, Tk       # graphisme
+    from src.core.util.timer import Chronometre         # timer
 
-    import os  # pour reucpere les arguments de la fonction
+    import os  # pour recupere les arguments de la fonction
     
     _DEBUG = False
 
     if not _DEBUG:
         os.sys.tracebacklimit = 0
 
-    USAGE = """\n---------------------------
+    USAGE = f"""\n---------------------------
 USAGE:
 
 Projet-ALGORITHMIQUE II : Nonogramme :
@@ -223,11 +223,11 @@ ABITBOL YOSSEF
 
 Pour executer (Windows):
 ------------------------------------------------------------------------------------
-> python .\main.py <coloration/enumeration> <nom_du_fichier_d_instance_sans_le_txt>|
+> python {os.sys.argv[0]} <coloration/enumeration> <nom_du_fichier_d_instance_sans_le_txt>|
 ------------------------------------------------------------------------------------
 
 exemple pour lancer 15.txt en enumeration :
-> python .\main enumeration 15
+> python {os.sys.argv[0]} enumeration 15
 """
     if len(os.sys.argv) != 3 or os.sys.argv[1]=="help" :
         print(USAGE)

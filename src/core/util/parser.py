@@ -5,7 +5,7 @@
 
     Créer un/des nonogramme(s) à partir d'une ou plusieurs instances
 """
-from core.nonogram import Nonogram
+from src.core.nonogram import Nonogram
 
 def loadInstance(n) -> Nonogram:
     """
@@ -16,7 +16,7 @@ def loadInstance(n) -> Nonogram:
         une exception
     """
     # Chemin vers le fichier d'instance standard
-    instancePath = "../instances/"
+    instancePath = "./instances/"
     fileName = str(n)+".txt" # n Instance.txt
     l = list()
     # ouverture du fichier et recuperation des sequences

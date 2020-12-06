@@ -6,7 +6,7 @@
     classe fenetre gerant l'affichage graphic
     avec tkinter
 """
-from core.nonogram import Nonogram, CASE
+from src.core.nonogram import Nonogram, CASE
 
 from tkinter import Tk, Canvas, Frame, BOTH
 

@@ -22,7 +22,7 @@
     un gain de vitesse
 """
 
-from core.nonogram import Nonogram, CASE
+from src.core.nonogram import Nonogram, CASE
 
 from copy import deepcopy
 
@@ -541,7 +541,7 @@ class Resolveur:
 
             if ok == True:
                 return ok, cn1 
-                
+
             return Resolveur.Enum_rec(cn, 0, CASE.NOIR)
 
     
